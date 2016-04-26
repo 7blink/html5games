@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset ="utf-8">
+
+  <title>Tennis Game</title>
+  <meta name = "Tennis Game HTML5 Canvas" content="Tennis Game">
+  <meta name = "7Blink" content="SitePoint">
+
+
+  <link rel = "stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script>
+
+    var canvas;
+    var canvasContext;
+
+    var ballX = 50;
+    var ballSpeedX = 10;
+
+    var ballY = 4;
+    var ballSpeedY = 10;
+
+    var paddle1Y = 250;
+    const PADDLE_HEIGHT = 100;
+
+    function calculateMousePos(evt) {
+        var rect = canvas.getBoundingClientRect();
+        canvas.style.cursor = "none";
+        var root = document.documentElement;
+        var mouseX = evt.clientX - rect.left - root.scrollLeft;
+        var mouseY = evt.clientY - rect.top - root.scrollTop;
+
+        return{
+            x:mouseX,
+            y:mouseY
+        };
+    }
+
+    window.onload = function() {
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+
+        var i = 0;
+
+        //Sets the frame rate.
+        //runs setInterval(functionToRun, milisecondsDelay);
+        setInterval(moveEverything, 1000/30);
+
+        canvas.addEventListener('mousemove',
+            function(evt){
+                var mousePos = calculateMousePos(evt)
+                paddle1Y = mousePos.y - (PADDLE_HEIGHT/2);
+            });
+
+    }
+
+    //Function will move all the objects
+    function moveEverything(){
+        ballX = ballX + ballSpeedX;
+        ballY = ballY + ballSpeedY
+
+        if(ballX > canvas.width){
+            ballSpeedX = -ballSpeedX;
+        }
+        else if(ballX < 0){
+            ballSpeedX = -ballSpeedX;
+        }
+
+        if(ballY < 0){
+            ballSpeedY = -ballSpeedY;
+        }
+        else if(ballY > canvas.height){
+            ballSpeedY = -ballSpeedY;
+        }
+
+
+        //Draw the new frame
+        drawEverything();
+    }
+
+    //Draws all the objects.
+    function drawEverything(){
+        canvasContext.fillStyle = 'black';
+        canvasContext.fillRect(0,0,canvas.width, canvas.height);
+
+        //Draws Left Paddle
+        canvasContext.fillStyle = 'white';
+        canvasContext.fillRect(0, paddle1Y, 20, PADDLE_HEIGHT);
+
+        //Draws Red ball
+        canvasContext.fillStyle = 'white';
+        canvasContext.beginPath();
+        canvasContext.arc(ballX, ballY, 10, 0, Math.PI*2, true);
+        canvasContext.fill();
+    }
+
+    </script>
+</body>
+</html>
