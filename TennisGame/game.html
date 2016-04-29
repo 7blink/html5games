@@ -101,10 +101,10 @@
 
     function computerMovement(){
         if(paddle2Y < canvas.height - PADDLE_HEIGHT && paddle2Y + (PADDLE_HEIGHT/2) + 20 < ballY){
-            paddle2Y = paddle2Y + 15;
+            paddle2Y = paddle2Y + 12;
         }
         else if(paddle2Y > 0 && paddle2Y +(PADDLE_HEIGHT/2) - 20 > ballY){
-            paddle2Y = paddle2Y - 15;
+            paddle2Y = paddle2Y - 11;
         }
     }
 
@@ -127,10 +127,11 @@
             //Player 2 hits ball
             if(ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT){
                 ballSpeedX = -ballSpeedX;
-                ballSpeed--;
+
 
                 var deltaY = ballY - (paddle2Y+(PADDLE_HEIGHT/2))
                 ballSpeedY = deltaY * 0.35
+
             }
             else{
                 miss = true;
@@ -149,10 +150,12 @@
             //Player 1 hits ball
             if(ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT){
                 ballSpeedX = -ballSpeedX;
-                ballSpeed++;
+
 
                 var deltaY = ballY - (paddle1Y+(PADDLE_HEIGHT/2))
                 ballSpeedY = deltaY * 0.35
+
+
             }
             else{
                 miss = true;
